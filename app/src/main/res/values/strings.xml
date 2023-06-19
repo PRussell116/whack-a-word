@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">whack-a-word</string>
+    <string name="apple">Apple</string>
+    <string name="banana">Banana</string>
+    <string name="bread">Bread</string>
+    <string name="cake">Cake\n</string>
+    <string name="carrot">Carrot</string>
+    <string name="egg">Egg</string>
+    <string name="orange">Orange</string>
+    <string name="potato">Potato\n</string>
+    <string name="tomato">Tomato</string>
+</resources>
