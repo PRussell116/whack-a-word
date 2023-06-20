@@ -34,6 +34,7 @@ class GameViewModel:ViewModel() {
             mMediaPlayer.setOnCompletionListener {
                 correctPlayer = MediaPlayer.create(context,R.raw.correct)
                 correctPlayer.start()
+                mMediaPlayer.release()
 
            }
 
@@ -58,6 +59,7 @@ class GameViewModel:ViewModel() {
      * Function that handles setting the state for which words are in the holes and which is the correct word
      */
     fun newGameRound(context: Context):CardWord{
+
         // make list of all possible words
         val wordList = CardWord.values().toMutableList()
         wordList.remove(CardWord.EMPTY)
@@ -105,14 +107,23 @@ class GameViewModel:ViewModel() {
             if(gameUiState.value.correctClicked){
                 correctPlayer = MediaPlayer.create(context,R.raw.correct)
                 correctPlayer.start()
+                mMediaPlayer.release()
+
                 correctPlayer.setOnCompletionListener {
                     wordReader = MediaPlayer.create(context,soundFile)
                     wordReader.start()
+                    wordReader.setOnCompletionListener {
+                        wordReader.release()
+                    }
+                    correctPlayer.release()
                 }
 
             }else{
                 wordReader = MediaPlayer.create(context,soundFile)
                 wordReader.start()
+                wordReader.setOnCompletionListener(){
+                    wordReader.release()
+                }
             }
 
 

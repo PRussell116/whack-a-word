@@ -19,6 +19,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -107,6 +108,7 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
     val density = LocalDensity.current
     Card(modifier = Modifier
         .padding(5.dp)
+        .height(150.dp)
         .clickable { viewModel.cardClicked(ctx, soundFileId, currentWord, word) }
         .fillMaxWidth()
 
@@ -124,7 +126,7 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
                 .fillMaxWidth(),
 
                 ) {
-                Spacer(modifier = Modifier.padding(15.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
                 Text(stringResource(textId))
                 Image(
                     painter = painterResource(id = imgId),
