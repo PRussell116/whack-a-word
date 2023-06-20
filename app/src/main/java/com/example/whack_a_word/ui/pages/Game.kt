@@ -1,5 +1,12 @@
 package com.example.whack_a_word.ui.pages
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +44,7 @@ fun GameScreen(viewModel: GameViewModel
     val uiState by viewModel.gameUiState.collectAsState()
 
 
+
     Column( modifier = Modifier
         .padding(15.dp)
         .fillMaxWidth(),
@@ -57,7 +65,7 @@ fun GameScreen(viewModel: GameViewModel
 
         }
 
-        // display tick if correct card clicked and hide after 2500 milliseconds
+        // display tick if correct card clicked and hide after 1500 milliseconds
         if(uiState.correctClicked){
             LaunchedEffect(key1= Unit ){
                 delay(1500)
@@ -78,24 +86,35 @@ fun GameScreen(viewModel: GameViewModel
             Text(text = "change word")
         }
 
-        
+
     }
 
 
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HoleCard(cardWord: CardWord,currentWord:CardWord,viewModel: GameViewModel){
 
         Column(
-            Modifier.width(100.dp).height(200.dp),
+            Modifier
+                .width(100.dp)
+                .height(200.dp),
             verticalArrangement = Arrangement.Bottom
         ) {
-            if(cardWord != CardWord.EMPTY){
-                WordCard(word = cardWord,currentWord,viewModel)
-            }
 
-            Image(
+            AnimatedContent(targetState = cardWord, transitionSpec = {
+
+                fadeIn(animationSpec = tween(2000)) + slideInVertically(animationSpec = tween(2000), initialOffsetY = {height -> height+height}) with
+                             slideOutVertically(animationSpec = tween(2000), targetOffsetY = {height -> height + height})
+
+            }) {targetState ->
+
+                    WordCard(word = targetState, currentWord, viewModel)
+
+
+            }
+          Image(
                 contentScale = ContentScale.FillBounds,
                 painter = painterResource(id = R.drawable.hole),
                 contentDescription = "Image of a hole",

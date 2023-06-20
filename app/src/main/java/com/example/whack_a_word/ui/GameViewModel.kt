@@ -15,9 +15,9 @@ class GameViewModel:ViewModel() {
     private val _gameUiState = MutableStateFlow(CardUiState())
     val gameUiState: StateFlow<CardUiState> = _gameUiState.asStateFlow()
 
-    var mMediaPlayer: MediaPlayer = MediaPlayer()
-    var correctPlayer:MediaPlayer = MediaPlayer()
-    var wordReader : MediaPlayer = MediaPlayer()
+    private var mMediaPlayer: MediaPlayer = MediaPlayer()
+    private var correctPlayer:MediaPlayer = MediaPlayer()
+    private var wordReader : MediaPlayer = MediaPlayer()
 
     fun cardClicked(context: Context, soundFile: Int, currentWord: CardWord, wordOnCardWord: CardWord){
         // read the word picked
@@ -59,6 +59,8 @@ class GameViewModel:ViewModel() {
      * Function that handles setting the state for which words are in the holes and which is the correct word
      */
     fun newGameRound(context: Context):CardWord{
+
+
 
         // make list of all possible words
         val wordList = CardWord.values().toMutableList()
@@ -121,7 +123,7 @@ class GameViewModel:ViewModel() {
             }else{
                 wordReader = MediaPlayer.create(context,soundFile)
                 wordReader.start()
-                wordReader.setOnCompletionListener(){
+                wordReader.setOnCompletionListener {
                     wordReader.release()
                 }
             }
@@ -130,16 +132,11 @@ class GameViewModel:ViewModel() {
 
         }
 
-
-
-
-
-
         return newCorrectWord
 
     }
 
-    fun pickRandomWordAndRemoveFromList(wordList: MutableList<CardWord>):CardWord{
+    private fun pickRandomWordAndRemoveFromList(wordList: MutableList<CardWord>):CardWord{
         val chosenWord = wordList.random()
         wordList.remove(chosenWord)
         return chosenWord
