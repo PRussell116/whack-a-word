@@ -7,3 +7,4 @@ Apk found in releases
 * Android studio
 * Java 17
 * gradle
+* emulator / android device with android 8+
