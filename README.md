@@ -1,6 +1,6 @@
 # whack-a-word
 
-Apk found in releases, minimum android version: 8
+Apk found in releases, minimum android version: ***8***
 
 ## Running via android studio requirements:
 
