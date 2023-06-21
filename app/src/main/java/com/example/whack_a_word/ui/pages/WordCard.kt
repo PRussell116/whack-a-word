@@ -2,6 +2,7 @@ package com.example.whack_a_word.ui.pages
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -96,7 +100,7 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
 
                 ) {
                 Spacer(modifier = Modifier.padding(5.dp))
-                Text(stringResource(textId))
+                Text(stringResource(textId),style = MaterialTheme.typography.headlineMedium)
                 Image(
                     painter = painterResource(id = imgId),
                     contentDescription = stringResource(id = textId),
@@ -104,6 +108,18 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
                         .padding(vertical = 5.dp)
                 )
             }
+        }
+    }else{
+        // invisible card so that animations still occur
+        Card(modifier = Modifier
+            .padding(5.dp)
+            .height(150.dp)
+            .fillMaxWidth()
+
+            .background(Color.Transparent),
+            colors = CardDefaults.cardColors(Color.Transparent)
+    ){
+
         }
     }
 }

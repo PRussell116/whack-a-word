@@ -19,14 +19,16 @@ class GameViewModel:ViewModel() {
     private var correctPlayer:MediaPlayer = MediaPlayer()
     private var wordReader : MediaPlayer = MediaPlayer()
 
+
+    /**
+     * Function handling when card is clicked, reads word picked
+     * if correct plays tick sound and adjusts mole count, then begins new round
+     */
     fun cardClicked(context: Context, soundFile: Int, currentWord: CardWord, wordOnCardWord: CardWord){
         // read the word picked
-
-
         mMediaPlayer = MediaPlayer.create(context, soundFile)
         mMediaPlayer.isLooping = false
         mMediaPlayer.start()
-
 
         // if correct is clicked
         if (currentWord == wordOnCardWord){
@@ -51,17 +53,14 @@ class GameViewModel:ViewModel() {
         newGameRound(context)
     }
 
-    fun  changeCorrect(){
-        _gameUiState.update { currentState -> currentState.copy(correctClicked = !currentState.correctClicked) }
+    fun  changeCorrect(bool:Boolean){
+        _gameUiState.update { currentState -> currentState.copy(correctClicked = bool) }
     }
 
     /**
      * Function that handles setting the state for which words are in the holes and which is the correct word
      */
     fun newGameRound(context: Context):CardWord{
-
-
-
         // make list of all possible words
         val wordList = CardWord.values().toMutableList()
         wordList.remove(CardWord.EMPTY)
@@ -69,8 +68,16 @@ class GameViewModel:ViewModel() {
 
         var newWords : MutableList<CardWord> = ArrayList()
 
-        // Pick correct word mole
-        val newCorrectWord = pickRandomWordAndRemoveFromList(wordList)
+        // Pick correct word mole,
+        val newCorrectWord: CardWord
+        // if starting / correct picked use random val
+        if(gameUiState.value.correctClicked || gameUiState.value.currentWord == CardWord.EMPTY){
+            newCorrectWord = pickRandomWordAndRemoveFromList(wordList)
+        }  else {
+            // if incorrect picked use old val
+            newCorrectWord = gameUiState.value.currentWord
+            wordList.remove(newCorrectWord)
+        }
         newWords.add(newCorrectWord)
 
         // choose other incorrect moles (cant choose already used words)
@@ -131,6 +138,7 @@ class GameViewModel:ViewModel() {
 
 
         }
+        mMediaPlayer.start()
 
         return newCorrectWord
 
