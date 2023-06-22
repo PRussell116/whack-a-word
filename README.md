@@ -8,3 +8,5 @@ Apk found in releases, minimum android version: ***8***
 * Java 17
 * gradle
 * emulator / android device with android 8+
+
+Use gradle to build the project
