@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds)
 
                 GameScreen(viewModel = viewModel)
+                //start the game
                 viewModel.newGameRound(LocalContext.current)
             }
 
