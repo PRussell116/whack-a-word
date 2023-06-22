@@ -14,11 +14,13 @@ import com.example.whack_a_word.ui.pages.GameScreen
 import com.example.whack_a_word.ui.theme.WhackawordTheme
 
 class MainActivity : ComponentActivity() {
+    // viewModel controlling the state
     val viewModel = GameViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WhackawordTheme {
+                // grass background
                 Image(
                     painter = painterResource(R.drawable.cartoon_green_texture_grass),
                     contentDescription ="", modifier = Modifier.fillMaxSize(),

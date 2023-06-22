@@ -10,11 +10,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+/**
+ * viewModel controlling the state of the game
+ */
 class GameViewModel:ViewModel() {
 
     private val _gameUiState = MutableStateFlow(CardUiState())
     val gameUiState: StateFlow<CardUiState> = _gameUiState.asStateFlow()
 
+    // sound players of each type
     private var mMediaPlayer: MediaPlayer = MediaPlayer()
     private var correctPlayer:MediaPlayer = MediaPlayer()
     private var wordReader : MediaPlayer = MediaPlayer()
@@ -53,6 +57,9 @@ class GameViewModel:ViewModel() {
         newGameRound(context)
     }
 
+    /**
+     * Update the correct state
+     */
     fun  changeCorrect(bool:Boolean){
         _gameUiState.update { currentState -> currentState.copy(correctClicked = bool) }
     }
@@ -110,7 +117,7 @@ class GameViewModel:ViewModel() {
         }
 
 
-        // if correct word is clicked play correct sound then new word else play just new word
+        // if correct word is clicked play correct sound then new word else play just new word, release old players
         mMediaPlayer.setOnCompletionListener {
 
             if(gameUiState.value.correctClicked){
@@ -144,6 +151,11 @@ class GameViewModel:ViewModel() {
 
     }
 
+    /**
+     * removes a word from given list and returns it
+     * @param wordList MutableList of cardWord to remove a value from
+     * @return chosenWord CardWord that is removed from the list
+     */
     private fun pickRandomWordAndRemoveFromList(wordList: MutableList<CardWord>):CardWord{
         val chosenWord = wordList.random()
         wordList.remove(chosenWord)

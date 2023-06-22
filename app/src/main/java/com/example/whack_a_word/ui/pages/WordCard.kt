@@ -25,7 +25,12 @@ import com.example.whack_a_word.R
 import com.example.whack_a_word.model.CardWord
 import com.example.whack_a_word.ui.GameViewModel
 
-
+/**
+ * Composable that displays the card containing the word in the hole
+ * @param word the word to be displayed
+ * @param currentWord the correct word value that the user must click
+ * @param viewModel GameViewModel  controlling the state of the game
+ */
 @Composable
 fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
     val ctx = LocalContext.current
@@ -33,7 +38,7 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
     var imgId = 0
     var soundFileId = 0
 
-
+    // change values of the card based on the word variable
     when(word){
         CardWord.APPLE -> {
             textId = R.string.apple
@@ -86,6 +91,7 @@ fun WordCard(word: CardWord,currentWord: CardWord,viewModel: GameViewModel){
         else -> Log.d("TAG","Empty")
 
     }
+    // display the card if not empty
     if(word!=CardWord.EMPTY){
         Card(modifier = Modifier
             .padding(5.dp)

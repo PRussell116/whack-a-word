@@ -60,7 +60,7 @@ fun GameScreen(viewModel: GameViewModel
 
         }
 
-        // display tick if correct card clicked and hide after 1500 milliseconds
+        // display tick popup if correct card clicked and hide after 1500 milliseconds
         if(uiState.correctClicked){
             LaunchedEffect(key1= Unit ){
                 delay(1500)
@@ -75,6 +75,11 @@ fun GameScreen(viewModel: GameViewModel
     }
 }
 
+/**
+ * Composable for each hole, displays a card containing the word held in the hole
+ * @param cardWord word for hole to display
+ * @param viewModel GameViewModel that controls the game state
+ */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HoleCard(cardWord: CardWord,currentWord:CardWord,viewModel: GameViewModel) {
@@ -85,7 +90,7 @@ fun HoleCard(cardWord: CardWord,currentWord:CardWord,viewModel: GameViewModel) {
             .height(200.dp),
         verticalArrangement = Arrangement.Bottom
     ) {
-
+        // animation for popping in and out of the hole
         AnimatedContent(targetState = cardWord, transitionSpec = {
 
             fadeIn(animationSpec = tween(2000)) + slideInVertically(
@@ -95,10 +100,12 @@ fun HoleCard(cardWord: CardWord,currentWord:CardWord,viewModel: GameViewModel) {
                         animationSpec = tween(2000),
                         targetOffsetY = { height -> height + height })
 
-        }) { targetState ->
-
+        }) {targetState ->
+            //card containing the word
             WordCard(word = targetState, currentWord, viewModel)
+
         }
+        // hole image
         Image(
             contentScale = ContentScale.FillBounds,
             painter = painterResource(id = R.drawable.hole),
